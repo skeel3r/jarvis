@@ -1,0 +1,9 @@
+<launch>
+    <node pkg="jarvis" type="jarvis_node" name="jarvis" launch-prefix="gnome-terminal --command" />
+    <node pkg="usb_cam" type="usb_cam_node" name="usb_cam" >
+      <remap from="/usb_cam" to="/camera" />
+    </node>
+    <node pkg="face_recognition" type="Fserver" name="Fserver" launch-prefix="gnome-terminal --command"/>
+    <node pkg="face_recognition" type="Fclient" name="Fclient" launch-prefix="gnome-terminal --command"/>
+    <node pkg="sound_play" type="soundplay_node.py" name="sound_play" launch-prefix="gnome-terminal --command" />
+</launch>
