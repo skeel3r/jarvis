@@ -1,10 +1,15 @@
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <sound_play/sound_play.h>
+#include <fstream>
+#include <iostream>
+#include <ctime>
+
 using namespace ros;
 using namespace std;
 class PeopleListener{
 	private:
+		ofstream myfile;
 		Publisher pub;
 		Subscriber sub;
 		void sub_callback(const std_msgs::String::ConstPtr& msg);
@@ -24,6 +29,11 @@ void PeopleListener::sub_callback(const std_msgs::String::ConstPtr& msg){
 	s = "Hello " + m;
 	sc.say(s);
 	sleep(2);
+	time_t now = time(0);
+	char* dt = ctime(&now);
+	myfile.open("people.log", ios::app);
+	myfile << m << " "<< dt << "\n";
+	myfile.close();
 }
 int main(int argc, char**argv) {
 	init(argc, argv, "jarvis");
