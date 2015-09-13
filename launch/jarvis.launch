@@ -4,6 +4,6 @@
       <remap from="/usb_cam" to="/camera" />
     </node>
     <node pkg="face_recognition" type="Fserver" name="Fserver" launch-prefix="gnome-terminal --command"/>
-    <node pkg="face_recognition" type="Fclient" name="Fclient" launch-prefix="gnome-terminal --command"/>
+    <node pkg="jarvis" type="face_recognition_client" name="face_recognition_client" launch-prefix="gnome-terminal --command"/>
     <node pkg="sound_play" type="soundplay_node.py" name="sound_play" launch-prefix="gnome-terminal --command" />
 </launch>

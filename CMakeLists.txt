@@ -6,6 +6,9 @@ project(jarvis)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  message_generation
+  actionlib
+  actionlib_msgs
   std_msgs
   sound_play
 )
@@ -44,11 +47,10 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+   FILES
+   FRClientGoal.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -65,10 +67,11 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs  # Or other packages containing msgs
+   actionlib_msgs
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -95,8 +98,10 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  ${actionlib_msgs_PACKAGE_PATH}
 )
 add_executable(jarvis_node src/jarvis.cpp)
+add_executable(face_recognition_client src/face_rec_client.cpp)
 
 ## Declare a cpp library
 # add_library(jarvis
@@ -108,10 +113,14 @@ add_executable(jarvis_node src/jarvis.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(jarvis_node jarvis_generate_messages_cpp)
+add_dependencies(face_recognition_client face_recognition_generate_messages_cpp)
+add_dependencies(face_recognition_client ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(jarvis_node
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(face_recognition_client
   ${catkin_LIBRARIES}
 )
 

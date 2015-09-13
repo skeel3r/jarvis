@@ -20,7 +20,7 @@ class PeopleListener{
 
 };
 PeopleListener::PeopleListener(){
-	sub = nh.subscribe("/names", 1000, &PeopleListener::sub_callback, this);
+	sub = nh.subscribe("names", 1000, &PeopleListener::sub_callback, this);
 }
 void PeopleListener::sub_callback(const std_msgs::String::ConstPtr& msg){
 	string s,m;
